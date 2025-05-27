@@ -1,0 +1,1 @@
+from app.main.dto.user_dto import UserRegisterDto, UserOutputDTO # type: ignore

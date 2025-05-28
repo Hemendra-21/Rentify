@@ -2,10 +2,12 @@ from dataclasses import dataclass
 from typing import Optional
 from enum import Enum
 
+# from app.main.models.user import UserRole
 
-class UserRole(str, Enum):
-    tenant = "tenant"
-    landlord = "landlord"
+
+# class UserRole(str, Enum):
+#     tenant = "tenant"
+#     landlord = "landlord"
 
 
 @dataclass
@@ -15,7 +17,7 @@ class UserRegisterDto:
     email:str 
     phone:str 
     password : str 
-    role: UserRole = UserRole.tenant
+    # role= UserRole.tenant
 
 
 @dataclass
@@ -25,7 +27,7 @@ class UserOutputDTO:
     last_name: str
     email: str
     phone: str
-    role: UserRole
+    # role: UserRole
     is_active: bool
     identity_verified: bool
     profile_image: Optional[str]

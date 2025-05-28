@@ -1,6 +1,14 @@
+import os 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 class ApiConfig:
-    DEFAULT_PAGE = 1
-    DEFAULT_PAGE_SIZE = 20
-    MAX_PAGE_SIZE = 100
-    CORS_ORIGINS = ["http://localhost:3000"]
-    RATE_LIMIT = "100/hour"
+    SECRET_KEY = os.getenv("SECRET_KEY")
+    MAIL_SERVER = os.getenv("MAIL_SERVER")
+    MAIL_PORT = int(os.getenv("MAIL_PORT"))
+    MAIL_USE_TLS = os.getenv("MAIL_USE_TLS") == "True"
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+    MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
+    FRONTEND_URL = os.getenv("FRONTEND_URL")

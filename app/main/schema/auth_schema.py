@@ -1,6 +1,10 @@
-from marshmallow import Schema, fields # type: ignore
+from marshmallow import Schema, fields, validate
 
-# UserLoginSchema
-class UserLoginSchema(Schema):
-    email = fields.Str(required=True)
-    password = fields.Str(required=True, load_only=True)
+class ForgotPasswordSchema(Schema):
+    email = fields.Email(required=True, validate=validate.Length(min=5))
+
+
+class ResetPasswordSchema(Schema):
+    token = fields.String(required=True)
+    new_password = fields.String(required=True, validate=validate.Length(min=6))
+    confirm_password = fields.String(required=True, validate=validate.Length(min=6))

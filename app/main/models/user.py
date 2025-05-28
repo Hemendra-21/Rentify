@@ -1,13 +1,9 @@
 
-from app.main.extensions import db
-import enum
+from app.main.extensions import db, bcrypt
 from datetime import datetime, timezone
 
-
-class UserRole(enum.Enum):
-    tenant = "tenant"
-    landlord = "landlord"
-
+from app.main.models.role import Role
+from app.main.models.user_roles import user_roles
 
 
 class User(db.Model):
@@ -26,11 +22,31 @@ class User(db.Model):
     profile_image = db.Column(db.String, nullable = True)
     is_active = db.Column(db.Boolean, default = True)
 
-    role = db.Column(db.Enum(UserRole), default = UserRole.tenant, nullable = False)
-
+    roles = db.relationship('Role', secondary=user_roles, back_populates="users")
     created_at = db.Column(db.DateTime(timezone = True), default = lambda: datetime.now(timezone.utc))
     updated_at = db.Column(db.DateTime(timezone = True), default = lambda: datetime.now(timezone.utc), onupdate = lambda: datetime.now(timezone.utc))
 
 
     # why lamda?
     # Using a lambda ensures the datetime is evaluated at runtime, not at the time the class is defined.
+
+    def set_password(self, raw_password: str):
+        self.password_hash = bcrypt.generate_password_hash(raw_password).decode('utf-8')
+
+    def check_password(self, raw_password: str):
+        return bcrypt.check_password_hash(self.password_hash, raw_password)
+
+    
+
+    def add_role(self, role_name):
+        role = Role.query.filter_by(name=role_name).first()
+        if role and role not in self.roles:
+            self.roles.append(role)
+
+    def remove_role(self, role_name):
+        role = Role.query.filter_by(name=role_name).first()
+        if role and role in self.roles:
+            self.roles.remove(role)
+
+    def has_role(self, role_name):
+        return any(role.name == role_name for role in self.roles)

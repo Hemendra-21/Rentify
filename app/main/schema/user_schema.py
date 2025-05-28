@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields, validate, validates, ValidationError
-from app.main.models.user import UserRole 
+# from app.main.models.user import UserRole 
 
 
 # UserInputSchema - for user registration/login
@@ -9,7 +9,7 @@ class UserRegisterSchema(Schema):
     email = fields.Email(required=True)
     phone = fields.Str(required=True, validate=validate.Length(min=1, max=50))
     password = fields.Str(required=True, load_only=True, validate=validate.Length(min=6)) 
-    role = fields.Str(validate=validate.OneOf([role.value for role in UserRole]), load_default=UserRole.tenant.value)
+    role = fields.Str(required=False)
 
     # @validates('phone')
     # def validate_phone(self, value=None):
@@ -38,3 +38,10 @@ class UserOutputSchema(Schema):
     updated_at = fields.DateTime()
 
 
+
+# -----------------------------
+# User login schema
+# -----------------------------
+class UserLoginSchema(Schema):
+    email = fields.Email(required=True)
+    password = fields.Str(required=True, load_only=True, validate=validate.Length(min=6))

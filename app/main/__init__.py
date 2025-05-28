@@ -22,10 +22,12 @@ def create_app():
     # TODO: Register blueprints here
 
     # from app.main.routes.user_routes import user_bp # type: ignore
-    from app.main.controllers.auth_controller import auth_bp # type: ignore
+    from app.main.controllers.auth_controller import auth_bp 
+    from app.main.controllers.property_image_routes import property_image_bp
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     # app.register_blueprint(user_bp, url_prefix="/api/users")
+    app.register_blueprint(property_image_bp, url_prefix="/api/images")
     
     
 

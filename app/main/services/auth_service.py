@@ -26,8 +26,8 @@ class AuthService:
             
             # Create User instance
             user = User(
-                first_name = data['first_name'],
-                last_name = data['last_name'],
+                first_name = data['firstName'],
+                last_name = data['lastName'],
                 email = data['email'],
                 phone = data['phone'],
             )

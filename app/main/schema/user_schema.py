@@ -4,10 +4,10 @@ from marshmallow import Schema, fields, validate, validates, ValidationError
 
 # UserInputSchema - for user registration/login
 class UserRegisterSchema(Schema):
-    first_name = fields.Str(required=True, validate=validate.Length(min=1, max=50))
-    last_name = fields.Str(required=True, validate=validate.Length(min=1, max=50))
+    firstName = fields.Str(required=True, validate=validate.Length(min=1, max=50))
+    lastName = fields.Str(required=True, validate=validate.Length(min=1, max=50))
     email = fields.Email(required=True)
-    phone = fields.Str(required=True, validate=validate.Length(min=1, max=50))
+    phone = fields.Str(required=True, validate=validate.Length(min=1, max=13))
     password = fields.Str(required=True, load_only=True, validate=validate.Length(min=6)) 
     role = fields.Str(required=False)
 

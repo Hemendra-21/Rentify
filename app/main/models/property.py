@@ -23,4 +23,4 @@ class Property(db.Model):
 
     owner = db.relationship('User', backref='properties')
     location = db.relationship('Location', backref='properties')
-    images = db.relationship('PropertyImage', backref='property', cascade='all, delete-orphan')
+    images = db.relationship('PropertyImage', back_populates='property')

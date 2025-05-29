@@ -12,11 +12,15 @@ register_schema = UserRegisterSchema()
 @auth_bp.route('/register', methods=['POST'])
 def register_user():
     try:
+        print("entered route")
+        print("data",request.get_json())
         user_data = register_schema.load(request.get_json())
+        print("validation success")
         return AuthService.register_user(user_data)
         # return jsonify(result), 201
     
     except ValidationError as err:
+        print(err)
         return jsonify({"errors": err.messages}), 400
     
     except Exception as e:
